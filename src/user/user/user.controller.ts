@@ -11,10 +11,18 @@ import {
   HttpRedirectResponse,
   Redirect,
 } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Response, Request, response } from 'express';
 
 @Controller('/api/users')
 export class UserController {
+  @Get('/view/hello')
+  viewHello(@Query('name') name: string, @Res() response: Response) {
+    response.render('index.html', {
+      title: 'Template Engine',
+      name: name,
+    });
+  }
+
   @Get('/set-cookie')
   setCookie(@Query('name') name: string, @Res() response: Response) {
     response.cookie('name', name);
@@ -49,7 +57,7 @@ export class UserController {
     @Query('first_name') firstName: string,
     @Query('last_name') lastName: string,
   ): Promise<string> {
-    return `GET: Hello ${firstName} - ${lastName}`;
+    return `Hello ${firstName} - ${lastName}`;
   }
 
   @Get('/:id')
