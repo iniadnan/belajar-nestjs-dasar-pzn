@@ -21,6 +21,9 @@ async function bootstrap() {
   app.useGlobalFilters(new ValidationFilter());
   // app.useGlobalInterceptors()
 
+
+  app.enableShutdownHooks()
+
   const configService = app.get(ConfigService);
   await app.listen(configService.get('PORT'));
 }
